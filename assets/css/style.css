@@ -44,7 +44,7 @@ main {
 .users-table tbody tr:nth-child(odd) {
   background-color: rgb(147, 147, 147);
 }
-.birthday {
+.users-table tbody tr.birthday {
   background-color: brown;
 }
 .delete-button {

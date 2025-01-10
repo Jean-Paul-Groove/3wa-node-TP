@@ -1,33 +1,31 @@
 const http = require("http");
 const fs = require("fs");
 const pug = require("pug");
-
 require("dotenv").config();
-
 const date = require("./utils/date");
+
 const server = http.createServer((req, res) => {
   const url = req.url;
 
-  //Permet de gérerla recherche automatique des navigateurs de la route "/favicon.ico"
   if (url === "/favicon.ico") {
     res.writeHead(200, { "Content-Type": "image/x-icon" });
     res.end();
     return;
   }
+
   if (url === "/style.css" && req.method === "GET") {
     res.writeHead(200, { "content-type": "text/css" });
     res.write(fs.readFileSync("./assets/css/style.css", "utf-8"));
     res.end();
     return;
   }
+
   if (url === "/users" && req.method === "GET") {
     try {
       const students = JSON.parse(
         fs.readFileSync("./Data/data.json").toString()
       );
-      res.writeHead(200, {
-        "Content-Type": "text/plain",
-      });
+
       pug.renderFile(
         "./views/users.pug",
         { students, formatDate: date.formatDate, isBirthday: date.isBirthday },
@@ -37,7 +35,8 @@ const server = http.createServer((req, res) => {
             res.end(err.message);
           }
           res.writeHead(200, { "content-type": "text/html" });
-          res.end(data);
+          res.write(data, "utf-8");
+          res.end();
         }
       );
       return;
@@ -57,7 +56,8 @@ const server = http.createServer((req, res) => {
             res.end(err.message);
           }
           res.writeHead(200, { "content-type": "text/html" });
-          res.end(data);
+          res.write(data, "utf-8");
+          res.end();
         });
         return;
       } catch (error) {
@@ -66,7 +66,10 @@ const server = http.createServer((req, res) => {
     } else if (req.method === "POST") {
       try {
         let body = "";
-        req.on("data", (chunk) => (body += chunk));
+        req.on("data", (chunk) => {
+          return (body += chunk);
+        });
+        req.setEncoding("utf-8");
         req.on("end", () => {
           const form = body.split("&");
           const formBody = {};
@@ -81,10 +84,10 @@ const server = http.createServer((req, res) => {
             );
             students.push(newUser);
             fs.writeFileSync("./Data/data.json", JSON.stringify(students));
-            res.writeHead(303, {
-              Location: "/users",
-            });
           }
+          res.writeHead(303, {
+            Location: "/users",
+          });
           res.end();
         });
       } catch (error) {
@@ -96,19 +99,20 @@ const server = http.createServer((req, res) => {
     }
   }
   if (url.split("/")[1] === "delete-user") {
-    console.log(url.split("/"));
     try {
       const userName = url.split("/")[2];
-      const students = JSON.parse(
-        fs.readFileSync("./Data/data.json").toString()
-      );
-      const userToDelete = students.find(
-        (student) => student.name === userName
-      );
-      const newStudents = students.filter(
-        (student) => student !== userToDelete
-      );
-      fs.writeFileSync("./Data/data.json", JSON.stringify(newStudents));
+      if (userName != null) {
+        const students = JSON.parse(
+          fs.readFileSync("./Data/data.json").toString()
+        );
+        const userToDelete = students.find(
+          (student) => student.name === userName
+        );
+        const newStudents = students.filter(
+          (student) => student !== userToDelete
+        );
+        fs.writeFileSync("./Data/data.json", JSON.stringify(newStudents));
+      }
       res.writeHead(303, {
         Location: "/users",
       });

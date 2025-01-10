@@ -1,6 +1,7 @@
 extends layout.pug 
-block title
-    Users 
+block title 
+    Users
+     
 
 block content 
     h1 List of users
@@ -17,7 +18,7 @@ block content
                     td 
                         if isBirthday(student.birth)
                             span 🎂
-                    td #{student.name} 
+                    td #{decodeURI(student.name)} 
                     td #{formatDate(student.birth)} 
                     td 
                         a.delete-button(href="/delete-user/"+student.name)  Delete
