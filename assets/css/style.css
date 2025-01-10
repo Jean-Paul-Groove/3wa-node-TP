@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: rgb(74, 71, 76);
+  color: white;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.nav-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+}
+.nav-list li {
+  list-style: none;
+  padding: 10px;
+}
+.nav-list li a {
+  color: white;
+  text-decoration: none;
+}
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.users-table {
+  background-color: rgb(95, 93, 96);
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px;
+}
+.users-table tr {
+  height: 30px;
+}
+.users-table td {
+  padding: 10px 5px;
+  min-width: 30px;
+}
+.users-table tbody tr:nth-child(odd) {
+  background-color: rgb(147, 147, 147);
+}
+.birthday {
+  background-color: brown;
+}
+.delete-button {
+  color: white;
+  padding: 5px;
+  border: 1px solid red;
+  background-color: rgb(95, 93, 96);
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.birthday .delete-button {
+  border-color: white;
+}
+.add-user-form {
+  background-color: rgb(95, 93, 96);
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+.add-user-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+.add-user-form button {
+  color: white;
+  padding: 5px;
+  border: 1px solid rgb(95, 93, 96);
+  background-color: red;
+  border-radius: 10px;
+  cursor: pointer;
+}

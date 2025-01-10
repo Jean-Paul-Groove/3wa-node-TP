@@ -1,0 +1,12 @@
+extends layout.pug 
+block title
+    Add a user 
+
+block content   
+    h1 Add a user 
+    form(action="/addUser" method="post").add-user-form
+        label(for='name') Name 
+            input(type="text", name="name" required)
+        label(for='birth') Birth date 
+            input(type="date", name="birth" required)
+        button(type="submit") Add

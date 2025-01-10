@@ -1,0 +1,23 @@
+extends layout.pug 
+block title
+    Users 
+
+block content 
+    h1 List of users
+    table.users-table 
+        thead 
+            tr 
+                th 
+                th  Name 
+                th Date of birth 
+                th Actions 
+        tbody 
+            for student of students 
+                tr(class=isBirthday(student.birth)? 'birthday' :'')
+                    td 
+                        if isBirthday(student.birth)
+                            span 🎂
+                    td #{student.name} 
+                    td #{formatDate(student.birth)} 
+                    td 
+                        a.delete-button(href="/delete-user/"+student.name)  Delete
