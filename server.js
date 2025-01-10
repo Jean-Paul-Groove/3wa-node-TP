@@ -123,7 +123,7 @@ const server = http.createServer((req, res) => {
     }
   }
   res.writeHead(303, {
-    Location: "/users",
+    Location: "/addUser",
   });
   res.end();
 });
